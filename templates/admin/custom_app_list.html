@@ -1,0 +1,36 @@
+{% load i18n %}
+{% if app_list %}
+    {% for app in app_list %}
+        <li class="nav-item menu-open">
+            <a href="{{ app.app_url }}"
+               title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}"
+               class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    {{ app.name }}
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                {% for model in app.models %}
+                    <li class="nav-item">
+                        {% if model.admin_url %}
+                            <a href="{{ model.admin_url }}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ model.name }}</p>
+                                {% if model.add_url %}
+                                <span><a href="{{ model.add_url }}" class="addlink"></a></span>
+                                {% endif %}
+                            </a>
+                        {% else %}
+                            <a href="#" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ model.name }}</p>
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+{% endif %}
